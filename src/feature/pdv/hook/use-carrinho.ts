@@ -13,7 +13,6 @@ export function useCarrinho() {
   const [clienteId, setClienteId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
 
-  // Retoma uma venda em aberto salva na sessão (ex.: ao voltar pro PDV ou dar F5)
   useEffect(() => {
     const idSalvo = sessionStorage.getItem(STORAGE_KEY);
     if (!idSalvo) return;
@@ -31,7 +30,6 @@ export function useCarrinho() {
       .catch(() => sessionStorage.removeItem(STORAGE_KEY));
   }, []);
 
-  // Mantém a sessão sincronizada com a venda em aberto
   useEffect(() => {
     if (compra) {
       sessionStorage.setItem(STORAGE_KEY, String(compra.id));
@@ -40,7 +38,6 @@ export function useCarrinho() {
     }
   }, [compra]);
 
-  // Avisa antes de fechar a aba/recarregar com uma venda em aberto
   useEffect(() => {
     function handleBeforeUnload(e: BeforeUnloadEvent) {
       if (!compra) return;

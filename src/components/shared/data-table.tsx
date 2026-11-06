@@ -121,16 +121,13 @@ export function DataTable<T>({
     <div className="flex flex-col gap-3">
       {description && <p className="text-sm text-muted-foreground">{description}</p>}
 
-      <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <span>Buscar:</span>
-          <Input
-            value={search}
-            onChange={(e) => handleSearch(e.target.value)}
-            placeholder={searchPlaceholder}
-            className="w-64"
-          />
-        </div>
+      <div className="flex flex-col-reverse gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <Input
+          value={search}
+          onChange={(e) => handleSearch(e.target.value)}
+          placeholder={searchPlaceholder}
+          className="w-full sm:w-64"
+        />
 
         {showAdd &&
           (onAdd ? (
@@ -228,32 +225,34 @@ export function DataTable<T>({
         </Table>
       </div>
 
-      <div className="flex items-center justify-between text-sm text-muted-foreground">
-        <span>
-          Mostrando {inicio} a {fim} de {sorted.length} registros
-        </span>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            disabled={paginaAtual <= 1}
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
-          >
-            Anterior
-          </Button>
-          <span>
-            {paginaAtual} / {totalPaginas}
+      {totalPaginas > 1 && (
+        <div className="flex items-center justify-center text-sm text-muted-foreground sm:justify-between">
+          <span className="hidden sm:inline">
+            Mostrando {inicio} a {fim} de {sorted.length} registros
           </span>
-          <Button
-            variant="outline"
-            size="sm"
-            disabled={paginaAtual >= totalPaginas}
-            onClick={() => setPage((p) => Math.min(totalPaginas, p + 1))}
-          >
-            Próximo
-          </Button>
+          <div className="flex items-center justify-center gap-3 sm:justify-start sm:gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={paginaAtual <= 1}
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+            >
+              Anterior
+            </Button>
+            <span>
+              {paginaAtual} / {totalPaginas}
+            </span>
+            <Button
+              variant="outline"
+              size="sm"
+              disabled={paginaAtual >= totalPaginas}
+              onClick={() => setPage((p) => Math.min(totalPaginas, p + 1))}
+            >
+              Próximo
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

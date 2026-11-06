@@ -18,7 +18,7 @@ export function AppSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="flex w-16 shrink-0 flex-col items-center bg-sidebar">
+    <aside className="hidden w-16 shrink-0 flex-col items-center bg-sidebar md:flex">
       <div className="flex h-16 w-full shrink-0 items-center justify-center">
         <Image src="/img/pdv.png" alt="PDV" width={36} height={36} className="object-contain" />
       </div>

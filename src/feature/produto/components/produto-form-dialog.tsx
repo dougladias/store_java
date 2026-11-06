@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import { FormDialog } from "@/components/shared/form-dialog";
 import { CurrencyInput } from "@/components/shared/currency-input";
+import { NumberInput } from "@/components/shared/number-input";
 import { ImageInput } from "@/components/shared/image-input";
 import { produtoService } from "../service/produto-service";
 import { UNIDADES_MEDIDA } from "../constants";
@@ -29,7 +30,7 @@ const FORM_VAZIO = {
   nome: "",
   unidade: "UN" as UnidadeMedida,
   preco: 0,
-  quantidade: "",
+  quantidade: 0,
   imagem: null as string | null,
 };
 
@@ -40,7 +41,7 @@ function paraFormulario(produto?: Produto | null) {
     nome: produto.nome,
     unidade: produto.unidade,
     preco: produto.preco,
-    quantidade: String(produto.quantidade),
+    quantidade: produto.quantidade,
     imagem: produto.imagem ?? null,
   };
 }
@@ -76,7 +77,7 @@ export function ProdutoFormDialog({
       nome: form.nome,
       unidade: form.unidade,
       preco: form.preco,
-      quantidade: Number(form.quantidade),
+      quantidade: form.quantidade,
       imagem: form.imagem,
     };
 
@@ -139,13 +140,11 @@ export function ProdutoFormDialog({
 
       <Field>
         <FieldLabel htmlFor="produto-quantidade">Quantidade</FieldLabel>
-        <Input
+        <NumberInput
+          key={formKey}
           id="produto-quantidade"
-          type="number"
-          step="0.001"
-          min="0"
-          value={form.quantidade}
-          onChange={(e) => set("quantidade", e.target.value)}
+          defaultValue={form.quantidade}
+          onValueChange={(valor) => set("quantidade", valor)}
           required
         />
       </Field>

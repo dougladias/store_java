@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Package } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -22,7 +23,8 @@ export function ProdutoImagem({ src, alt, className }: ProdutoImagemProps) {
   }
 
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img src={src} alt={alt} className={cn("rounded object-cover", className)} />
+    <div className={cn("relative overflow-hidden rounded", className)}>
+      <Image src={src} alt={alt} fill unoptimized className="object-cover" />
+    </div>
   );
 }

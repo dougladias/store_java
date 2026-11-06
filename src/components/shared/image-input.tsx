@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { ImagePlus, X } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -41,33 +42,43 @@ export function ImageInput({ value, onChange, className }: ImageInputProps) {
   }
 
   return (
-    <div className={cn("flex items-center gap-3", className)}>
-      <div className="flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-lg border bg-muted">
+    <div className={cn("relative", className)}>
+      <Button
+        type="button"
+        variant="ghost"
+        onClick={() => inputRef.current?.click()}
+        className={cn(
+          "h-32 w-full flex-col gap-1.5 overflow-hidden rounded-lg border-2 border-dashed border-input p-0 text-muted-foreground",
+          value ? "border-solid bg-muted/30 hover:bg-muted/30" : "hover:bg-transparent"
+        )}
+      >
         {value ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={value} alt="Imagem do produto" className="size-full object-cover" />
+          <div className="relative size-full p-2">
+            <Image src={value} alt="Imagem do produto" fill unoptimized className="object-contain" />
+          </div>
         ) : (
-          <ImagePlus className="text-muted-foreground size-6" />
+          <>
+            <ImagePlus className="size-6" />
+            <span className="text-sm">Escolher imagem</span>
+          </>
         )}
-      </div>
+      </Button>
 
-      <div className="flex items-center gap-2">
-        <Button type="button" variant="outline" size="sm" onClick={() => inputRef.current?.click()}>
-          {value ? "Trocar imagem" : "Escolher imagem"}
+      {value && (
+        <Button
+          type="button"
+          variant="secondary"
+          size="icon-sm"
+          aria-label="Remover imagem"
+          className="absolute top-1.5 right-1.5"
+          onClick={(e) => {
+            e.stopPropagation();
+            onChange(null);
+          }}
+        >
+          <X />
         </Button>
-
-        {value && (
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-sm"
-            aria-label="Remover imagem"
-            onClick={() => onChange(null)}
-          >
-            <X />
-          </Button>
-        )}
-      </div>
+      )}
 
       <input
         ref={inputRef}

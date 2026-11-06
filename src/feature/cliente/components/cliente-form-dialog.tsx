@@ -229,25 +229,27 @@ export function ClienteFormDialog({
         />
       </Field>
 
-      <Field>
-        <FieldLabel htmlFor="cliente-bairro">Bairro</FieldLabel>
-        <Input
-          id="cliente-bairro"
-          value={form.bairro}
-          onChange={(e) => set("bairro", e.target.value)}
-          required
-        />
-      </Field>
+      <div className="col-span-2 flex gap-4">
+        <Field>
+          <FieldLabel htmlFor="cliente-bairro">Bairro</FieldLabel>
+          <Input
+            id="cliente-bairro"
+            value={form.bairro}
+            onChange={(e) => set("bairro", e.target.value)}
+            required
+          />
+        </Field>
 
-      <Field>
-        <FieldLabel htmlFor="cliente-numero">Número</FieldLabel>
-        <Input
-          id="cliente-numero"
-          value={form.numero}
-          onChange={(e) => set("numero", e.target.value)}
-          required
-        />
-      </Field>
+        <Field>
+          <FieldLabel htmlFor="cliente-numero">Número</FieldLabel>
+          <Input
+            id="cliente-numero"
+            value={form.numero}
+            onChange={(e) => set("numero", e.target.value)}
+            required
+          />
+        </Field>
+      </div>
 
       {error && <FieldError className="col-span-2">{error}</FieldError>}
     </FormDialog>

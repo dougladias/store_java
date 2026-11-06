@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ProdutoImagem } from "@/components/shared/produto-imagem";
+import { cn } from "@/lib/utils";
 import { useProdutos } from "@/feature/produto/hook/use-produtos";
 import type { Produto } from "@/feature/produto/types";
 
@@ -15,9 +16,10 @@ function formatPreco(preco: number) {
 
 interface ProdutoGridProps {
   onSelecionar: (produto: Produto) => void;
+  className?: string;
 }
 
-export function ProdutoGrid({ onSelecionar }: ProdutoGridProps) {
+export function ProdutoGrid({ onSelecionar, className }: ProdutoGridProps) {
   const { produtos, loading, error } = useProdutos();
   const [busca, setBusca] = useState("");
   const [pagina, setPagina] = useState(1);
@@ -42,7 +44,7 @@ export function ProdutoGrid({ onSelecionar }: ProdutoGridProps) {
   }
 
   return (
-    <div className="flex h-full flex-col gap-3">
+    <div className={cn("flex flex-col gap-3", className)}>
       <Input
         placeholder="Procure o produto pelo nome..."
         value={busca}
@@ -52,24 +54,26 @@ export function ProdutoGrid({ onSelecionar }: ProdutoGridProps) {
         }}
       />
 
-      <div className="grid flex-1 grid-cols-4 gap-3 content-start">
+      <div className="grid flex-1 grid-cols-3 gap-2 content-start sm:gap-3 md:grid-cols-5">
         {visiveis.map((produto) => (
           <Button
             key={produto.id}
             type="button"
             variant="outline"
-            className="h-auto flex-col items-center gap-2 p-3 whitespace-normal"
+            className="h-auto flex-col items-center gap-1.5 p-2 whitespace-normal sm:gap-2 sm:p-3"
             onClick={() => onSelecionar(produto)}
           >
             <ProdutoImagem
               src={produto.imagem}
               alt={produto.nome}
-              className="size-14 rounded-lg"
+              className="size-16 rounded-lg sm:size-20"
             />
-            <span className="text-center text-sm leading-tight font-medium">
+            <span className="text-center text-xs leading-tight font-medium sm:text-sm">
               {produto.nome}
             </span>
-            <span className="text-muted-foreground text-xs">{formatPreco(produto.preco)}</span>
+            <span className="text-muted-foreground text-[11px] sm:text-xs">
+              {formatPreco(produto.preco)}
+            </span>
           </Button>
         ))}
       </div>
